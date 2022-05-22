@@ -3,4 +3,5 @@
 export(BulmaBtn)
 export(Bulma_Button_Binding)
 export(Bulma_Dependency)
+export(UpdateBulmaBtn)
 import(htmltools)

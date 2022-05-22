@@ -90,9 +90,7 @@ BulmaBtn <- function(inputId,
 #' @param disabled NULL or Boolean value to make a button disabled
 #' @param hidden NULL or Boolean value to make a button hidden
 #' @param session session object
-#' @import shiny
 #' @export
-#' @examples UpdateBulmaBtn(inputId = "example", text = "New Text")
 UpdateBulmaBtn <- function(
     inputId,
     text = NULL,
@@ -134,11 +132,8 @@ UpdateBulmaBtn <- function(
 
     # Makes sure that the attribute contains either TRUE or FALSE if not NULL
     Is_Null <- function(attribute) {
-      if (!is.null(attribute)) {
-        attribute <- match.arg(
-          arg = attribute,
-          choices = c(TRUE, FALSE)
-        )
+      if (!is.null(attribute) & !is.logical(attribute)) {
+        stop("One of the parameters in UpdateBulmaBtn must be TRUE or FALSE")
       }
     }
 
