@@ -1,0 +1,14 @@
+Package: shinyBulma
+Title: Create Widgets Using the Bulma CSS Framework
+Version: 0.0.0.9000
+Authors@R: person("Xing", "Yang", , "x.yang89@yahoo.com", role = c("aut", "cre"), comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: Utilze the Bulma CSS framework to create widgets that look different from the default Bootstrap 3 aesthetic. Will also include the ability to edit the class attributes via JQuery.
+License: MIT + file LICENSE
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.1.2
+Suggests: 
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
+Imports: 
+    htmltools
