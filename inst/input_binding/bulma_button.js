@@ -23,6 +23,12 @@ $.extend(binding, {
     })
   },
 
+  receiveMessage: function(el, data) {
+  	if (data.hasOwnProperty('text')) {
+  		$(el).text(data.text)
+  	}
+  },
+
   unsubscribe: function(el) {
     $(el).off(".bulm-btn");
   }

@@ -74,3 +74,98 @@ BulmaBtn <- function(inputId,
           Bulma_Button_Binding()
           )
 }
+
+#' Update Bulma Button
+#'
+#' @param inputId string value for id
+#' @param text NULL or string value for button text
+#' @param color NULL or string value for button color
+#' @param size NULL or string value for button size
+#' @param state NULL or string value for button state
+#' @param responsive NULL or Boolean value for responsive size
+#' @param fullwidth NULL or Boolean value to make button size fullwidth
+#' @param outlined NULL or Boolean value to make button outlined
+#' @param inverted NULL or Boolean value to make button inverted
+#' @param rounded NULL or Boolean value to make button with rounded corners
+#' @param disabled NULL or Boolean value to make a button disabled
+#' @param hidden NULL or Boolean value to make a button hidden
+#' @param session session object
+#' @import shiny
+#' @export
+#' @examples UpdateBulmaBtn(inputId = "example", text = "New Text")
+UpdateBulmaBtn <- function(
+    inputId,
+    text = NULL,
+    color = NULL,
+    size = NULL,
+    state = NULL,
+    responsive = NULL,
+    fullwidth = NULL,
+    outlined = NULL,
+    inverted = NULL,
+    rounded = NULL,
+    disabled = NULL,
+    hidden = NULL,
+    session = getDefaultReactiveDomain()
+    ){
+
+    if (!is.null(size)) {
+      size <- match.arg(
+        arg = size,
+        choices = c("is-normal", "is-small", "is-medium", "is-large")
+      )
+    }
+
+    if (!is.null(color)) {
+      color <- match.arg(
+        arg = color,
+        choices = c("is-white", "is-light", "is-dark", "is-black", "is-text",
+                    "is-ghost", "is-primary", "is-link", "is-info", "is-success",
+                    "is-warning", "is-danger")
+      )
+    }
+
+    if (!is.null(state)) {
+      state <- match.arg(
+        arg = state,
+        choices = c("is-hovered", "is-focused", "is-active", "is-loading")
+      )
+    }
+
+    # Makes sure that the attribute contains either TRUE or FALSE if not NULL
+    Is_Null <- function(attribute) {
+      if (!is.null(attribute)) {
+        attribute <- match.arg(
+          arg = attribute,
+          choices = c(TRUE, FALSE)
+        )
+      }
+    }
+
+    Is_Null(responsive)
+    Is_Null(fullwidth)
+    Is_Null(outlined)
+    Is_Null(inverted)
+    Is_Null(rounded)
+    Is_Null(disabled)
+    Is_Null(hidden)
+
+    message <- list(
+      text = text,
+      color = color,
+      size = size,
+      state = state,
+      responsive = responsive,
+      fullwidth = fullwidth,
+      outlined = outlined,
+      inverted = inverted,
+      rounded = rounded,
+      disabled = disabled,
+      hidden = hidden
+      )
+
+    # Removes elements that have a NULL value
+    message[sapply(message, is.null)] <- NULL
+
+    session$sendInputMessage(inputId, message)
+}
