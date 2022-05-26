@@ -66,7 +66,7 @@ test_that("UpdateBulmaBtn function causes error with incorrect arguments", {
 })
 
 test_that("UpdateBulmaBtn function does not cause errors with correct arguments", {
-  # expect_silent(UpdateBulmaBtn(inputId = "example"))
+  expect_silent(UpdateBulmaBtn(inputId = "example"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", text = "Example"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", size = "is-large"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", color = "is-dark"))
