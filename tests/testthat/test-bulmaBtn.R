@@ -18,7 +18,7 @@ test_that("BulmaBtn renders correct html tags", {
                                hidden = TRUE))
 
   expected <- paste("<button class=\"button bulma-btn is-large is-link",
-                    "is-loading is-responsive is-fullwidth is-outlined",
+                    "is-loading  is-responsive is-fullwidth is-outlined",
                     "is-inverted is-rounded is-hidden\"",
                     "id=\"example\">Button</button>")
 
@@ -28,7 +28,7 @@ test_that("BulmaBtn renders correct html tags", {
 
 test_that("That incorrect argument choices will cause an error", {
 
-  result <- paste("<button class=\"button bulma-btn is-normal  \"",
+  result <- paste("<button class=\"button bulma-btn is-normal   \"",
                   "id=\"example\">Button</button>")
 
   expect_error(BulmaBtn())  # no arguments
@@ -51,7 +51,7 @@ test_that("Disable attribute works", {
   str <- as.character(BulmaBtn(inputId = "example",
                                text = "Button",
                                disabled = TRUE))
-  result <- paste("<button class=\"button bulma-btn is-normal  \"",
+  result <- paste("<button class=\"button bulma-btn is-normal   \"",
                   "disabled=\"true\" id=\"example\">Button</button>")
 
   expect_equal(str, result)
@@ -66,7 +66,25 @@ test_that("UpdateBulmaBtn function causes error with incorrect arguments", {
 })
 
 test_that("UpdateBulmaBtn function does not cause errors with correct arguments", {
-  expect_silent(UpdateBulmaBtn(inputId = "example"))
+
+  createModuleSession <- function(moduleId) {
+    session <- as.environment(list(
+      ns = NS(moduleId),
+      BulmaBtn(inputId = ns("test"), text = "Test"),
+      sendInputMessage = function(inputId, message) {
+        session$lastInputMessage = list(id = inputId, message = message)
+      }
+    ))
+    class(session) <- "ShinySession"
+    session
+  }
+
+  sessionA <- createModuleSession("sessA")
+  UpdateBulmaBtn(session = sessionA, inputId = "test", text = "Button")
+  resultA <- sessionA$lastInputMessage
+
+  expect_true(grepl('"SessA-test1"', resultA$message$options))
+  # expect_silent(UpdateBulmaBtn(inputId = "example"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", text = "Example"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", size = "is-large"))
   # expect_silent(UpdateBulmaBtn(inputId = "example", color = "is-dark"))
