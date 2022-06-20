@@ -21,3 +21,15 @@ Bulma_Button_Binding <- function() {
     script = "bulma_button.js"
   )
 }
+
+#' Font Awesome Dependency
+#' @import htmltools
+#' @export
+Font_Awesome_Dependency <- function() {
+  htmlDependency(
+    name = "fontawesome",
+    version = "6.1.1",
+    src = c(file = "~/Documents/Programming Workspace/R/shinyBulma/inst/fontawesome"),
+    stylsheet = "all.min.css"
+  )
+}
