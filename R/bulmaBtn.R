@@ -24,8 +24,8 @@
 #' BulmaBtn(inputId = "example", text = "Submit")
 BulmaBtn <- function(inputId,
                      text,
-                     icon,
                      size = "is-normal",
+                     icon = NULL,
                      color = NULL,
                      state = NULL,
                      spacing = NULL,
