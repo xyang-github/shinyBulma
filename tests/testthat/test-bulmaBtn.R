@@ -164,43 +164,69 @@ test_that("Disable attribute works", {
   str <- as.character(BulmaBtn(inputId = "example",
                                text = "Button",
                                disabled = TRUE))
-  result <- paste("<button class=\"button bulma-btn is-normal   \"",
-                  "disabled=\"true\" id=\"example\">Button</button>")
+  result <- paste(
+    "<button class=\"button bulma-btn is-normal\"",
+    "disabled=\"true\" id=\"example\">Button</button>")
 
   expect_equal(str, result)
 })
 
-test_that("UpdateBulmaBtn function causes error with incorrect arguments", {
-  expect_error(UpdateBulmaBtn())  # no arguments
-  expect_error(UpdateBulmaBtn(inputId = "example", size = "xl"))
-  expect_error(UpdateBulmaBtn(inputId = "example", color = "red"))
-  expect_error(UpdateBulmaBtn(inputId = "example", state = "disabled"))
-  expect_error(UpdateBulmaBtn(inputId = "example", responsive = true))
-})
-
-test_that("UpdateBulmaBtn function does not cause errors with correct arguments", {
+test_that("UpdateBulmaBtn function changes class attributes and does not cause 
+an error", {
 
   createModuleSession <- function(moduleId) {
-    session <- as.environment(list(
-      ns = NS(moduleId),
-      BulmaBtn(inputId = ns("test"), text = "Test"),
-      sendInputMessage = function(inputId, message) {
-        session$lastInputMessage = list(id = inputId, message = message)
-      }
-    ))
+    session <-
+    as.environment(
+      list(
+        ns = shiny::NS(moduleId),
+        btn = BulmaBtn(
+          inputId = "test",
+          text = "Button",
+          color = "is-info",
+          state = "is-active",
+          spacing = "mb-4",
+          responsive = TRUE,
+          fullwidth = TRUE,
+          outlined = TRUE,
+          inverted = TRUE,
+          rounded = TRUE,
+          hidden = TRUE),
+        sendInputMessage = function(id, message) {
+          session$lastInputMessage <- list(id = id, message = message)
+        }
+      )
+    )
     class(session) <- "ShinySession"
     session
   }
 
-  sessionA <- createModuleSession("sessA")
-  UpdateBulmaBtn(session = sessionA, inputId = "test", text = "Button")
+  sessionA <- createModuleSession("sessionA")
+
+  UpdateBulmaBtn(
+    session = sessionA,
+    inputId = "test",
+    text = "Button Updated",
+    color = "is-link",
+    state = "is-focused",
+    spacing = c("mt-1", "mr-2"),
+    responsive = FALSE,
+    fullwidth = FALSE,
+    outlined = FALSE,
+    inverted = FALSE,
+    rounded = FALSE,
+    hidden = FALSE
+    )
+
   resultA <- sessionA$lastInputMessage
 
-  expect_true(grepl('"SessA-test1"', resultA$message$options))
-  # expect_silent(UpdateBulmaBtn(inputId = "example"))
-  # expect_silent(UpdateBulmaBtn(inputId = "example", text = "Example"))
-  # expect_silent(UpdateBulmaBtn(inputId = "example", size = "is-large"))
-  # expect_silent(UpdateBulmaBtn(inputId = "example", color = "is-dark"))
-  # expect_silent(UpdateBulmaBtn(inputId = "example", state = "is-loading"))
-  # expect_silent(UpdateBulmaBtn(inputId = "example", responsive = TRUE))
+  expect_equal(resultA$message$text, "Button Updated")
+  expect_equal(resultA$message$color, "is-link")
+  expect_equal(resultA$message$state, "is-focused")
+  expect_equal(resultA$message$spacing, c("mt-1", "mr-2"))
+  expect_false(resultA$message$responsive)
+  expect_false(resultA$message$fullwidth)
+  expect_false(resultA$message$outlined)
+  expect_false(resultA$message$inverted)
+  expect_false(resultA$message$rounded)
+  expect_false(resultA$message$hidden)
 })
