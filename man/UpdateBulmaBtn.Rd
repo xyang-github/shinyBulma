@@ -10,6 +10,7 @@ UpdateBulmaBtn(
   color = NULL,
   size = NULL,
   state = NULL,
+  spacing = NULL,
   responsive = NULL,
   fullwidth = NULL,
   outlined = NULL,
@@ -17,7 +18,7 @@ UpdateBulmaBtn(
   rounded = NULL,
   disabled = NULL,
   hidden = NULL,
-  session = getDefaultReactiveDomain()
+  session = shiny::getDefaultReactiveDomain()
 )
 }
 \arguments{
@@ -30,6 +31,8 @@ UpdateBulmaBtn(
 \item{size}{NULL or string value for button size}
 
 \item{state}{NULL or string value for button state}
+
+\item{spacing}{NULL or string value for margin and padding}
 
 \item{responsive}{NULL or Boolean value for responsive size}
 

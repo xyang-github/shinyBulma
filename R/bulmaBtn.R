@@ -3,6 +3,8 @@
 #' @param text string value for the text displayed in the button
 #' @param size string value for size; choices are: "is-normal", "is-small",
 #' "is-medium", "is-large"
+#' @param icon string value corresponding to fontawesome's i tag's class value
+#' (i.e. "fa-solid fa-check")
 #' @param color string value for color; choices are: "is-white", "is-light",
 #' "is-dark", "is-black", "is-text", "is-ghost", "is-primary", "is-link",
 #' "is-info", "is-success", "is-warning", "is-danger"
@@ -176,7 +178,7 @@ UpdateBulmaBtn <- function(
     rounded = NULL,
     disabled = NULL,
     hidden = NULL,
-    session = getDefaultReactiveDomain()
+    session = shiny::getDefaultReactiveDomain()
     ) {
 
     if (!is.null(size)) {
@@ -260,6 +262,16 @@ UpdateBulmaBtn <- function(
     session$sendInputMessage(inputId, message)
 }
 
+#' Bulma Button Group
+#' @param inputId string value for id
+#' @param ... BulmaBtn function
+#' @import htmltools
+#' @export
+#' @examples
+#' BulmaBtnGroup(
+#'  inputId = "example",
+#'  BulmaBtn(inputId = "1", text = "1"),
+#'  BulmaBtn(inputId = "2", text = "2"))
 BulmaBtnGroup <- function(
   inputId,
   ...) {
@@ -287,3 +299,7 @@ BulmaBtnGroup <- function(
       Bulma_Dependency()
       )
 }
+
+# Not implemented:
+# - addons
+# - list of buttons

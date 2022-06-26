@@ -178,7 +178,7 @@ an error", {
     session <-
     as.environment(
       list(
-        ns = shiny::NS(moduleId),
+        ns = NS(moduleId),
         btn = BulmaBtn(
           inputId = "test",
           text = "Button",
@@ -229,4 +229,23 @@ an error", {
   expect_false(resultA$message$inverted)
   expect_false(resultA$message$rounded)
   expect_false(resultA$message$hidden)
+})
+
+test_that("BulmaBtnGroup renders correct HTML", {
+  html <- BulmaBtnGroup(
+    inputId = "group",
+    BulmaBtn(inputId = "g1", text = "1", color = "is-info"),
+    BulmaBtn(inputId = "g2", text = "2", color = "is-warning"),
+    BulmaBtn(inputId = "g3", text = "3", color = "is-danger")
+  )
+
+  result <- paste(
+    "<div class=\"field is-grouped\">\n  <p class=\"control\">\n    <button",
+    "class=\"button bulma-btn is-normal is-info\" id=\"g1\">1</button>\n ",
+    "</p>\n  <p class=\"control\">\n    <button class=\"button bulma-btn",
+    "is-normal is-warning\" id=\"g2\">2</button>\n  </p>\n ",
+    "<p class=\"control\">\n    <button class=\"button bulma-btn is-normal",
+    "is-danger\" id=\"g3\">3</button>\n  </p>\n</div>")
+
+  expect_equal(as.character(html), result)
 })
