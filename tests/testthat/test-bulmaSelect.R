@@ -54,7 +54,7 @@ test_that("Class attributes are formatting correctly", {
                    "le\">\n  <option>A</option>\n  <option>B</option>\n  <op",
                    "tion>C</option>\n</select>")
 
-  expect_true(as.character(select), answer)
+  expect_equal(as.character(select), answer)
 })
 
 test_that("Icon attribute works", {
@@ -64,6 +64,28 @@ test_that("Icon attribute works", {
     icon = "fa-solid fa-globe"
   )
 
-  print(select)
-  print(as.character(select))
+  answer <- paste0("<div class=\"control has-icons-left\">\n  <select id=\"exa",
+                   "mple\" class=\"is-normal\">\n    <option>A</option>\n    <",
+                   "option>B</option>\n    <option>C</option>\n  </sele",
+                   "ct>\n  <div class=\"icon is-left is-normal\"><i cla",
+                   "ss = ' fa-solid fa-globe '></i></div>\n</div>")
+
+  # Without applying a size attribute
+  expect_equal(as.character(select), answer)
+
+  select <- BulmaSelect(
+    inputId = "example",
+    choices = c("A", "B", "C"),
+    icon = "fa-solid fa-globe",
+    size = "is-large"
+  )
+
+  answer <- paste0("<div class=\"control has-icons-left\">\n  <select id=\"exa",
+                   "mple\" class=\"is-large\">\n    <option>A</option>\n    <o",
+                   "ption>B</option>\n    <option>C</option>\n  </selec",
+                   "t>\n  <div class=\"icon is-left is-large\"><i class = ' f",
+                   "a-solid fa-globe '></i></div>\n</div>")
+
+  # After applying size attribute
+  expect_equal(as.character(select), answer)
 })
